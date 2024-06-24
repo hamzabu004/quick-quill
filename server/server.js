@@ -138,7 +138,7 @@ server.post("/signin", (req, res)=> {
     })
     .catch(err => {
         console.log(err.message);
-        return res.status(500).json({"error":"Invalid Email and/or password"})
+        return res.status(500).json({"error":"Invalid email and/or password"})
     })
 
 
