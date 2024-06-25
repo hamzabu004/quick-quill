@@ -8,7 +8,8 @@ import jwt from 'jsonwebtoken';
 import cors from 'cors';
 import admin from "firebase-admin";
 import serviceAccountKey from "./blogging-website-88ff8-firebase-adminsdk-mo1gc-44c62f84e0.json" with {type:"json"}
-import {getAuth} from "firebase-admin/auth"
+import {getAuth} from "firebase-admin/auth";
+import aws from "aws-sdk"
 
 
 const server = express();
@@ -28,6 +29,29 @@ server.use(cors())
 mongoose.connect(process.env.DB_LOCATION, {
     autoIndex: true
 })
+
+
+//setting up AWS (s3 bucket)
+const s3 = new aws.S3({
+    region:'us-east-2',
+    accessKeyId:process.env.AWS_ACCESS_KEY,
+    secretAccessKey:process.env.AWS_SECRET_ACCESS_KEY
+})
+
+const generateUploadURL = async () => {
+
+    const date = new Date();
+    const imageName = `${nanoid()}-${date.getTime()}.jpeg`;
+    
+    return await s3.getSignedUrlPromise('putObject', {
+        Bucket: 'ali-blogging-website',
+        Key: imageName,
+        Expires: 1000,
+        ContentType: "image/jpeg"
+    })
+}
+
+
 
 const formatDatatoSend = (user) => {
 
@@ -57,6 +81,17 @@ const generateUsername = async (email) => {
     return username
 
 }
+
+
+//upload image url
+
+server.get("/get-upload-url", (req, res) => {
+    generateUploadURL().then(url => res.status(200).json({"uploadURL":url}))
+    .catch(err => {
+        console.log(err.message);
+        return res.status(500).json({"error":err.message})
+    })
+}) 
 
 
 server.post("/signup", (req, res) => {

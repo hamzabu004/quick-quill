@@ -42,29 +42,26 @@ const Navbar = () => {
                     </input>
                     <i className="fi fi-rr-search absolute right-[10%] md:pointer-events-none md:left-5 top-1/2 -translate-y-1/2 text-xl text-dark-grey" ></i>
 
-                </div>     
+            </div>     
                 
-                <div className="flex items-center gap-3 md:gap-6 ml-auto">
-                    <button className="md:hidden bg-grey w-12 h-12 rounded-full flex items-center justify-center" onClick={() => setSearchBoxVisibility(currentVal => !currentVal) }>
-                        <i className="fi fi-rr-search text-xl"></i>
-                    </button>
+            <div className="flex items-center gap-3 md:gap-6 ml-auto">
+                <button className="md:hidden bg-grey w-12 h-12 rounded-full flex items-center justify-center" onClick={() => setSearchBoxVisibility(currentVal => !currentVal) }>
+                    <i className="fi fi-rr-search text-xl"></i>
+                </button>
 
-                    <Link to="/editor" className="hidden md:flex gap-2 link rounded-full">
-                        <i className="fi fi-rr-file-edit"></i>
-                        <p>Write</p>
-                    </Link>
+                <Link to="/editor" className="max-md:hidden md:flex gap-2 link rounded-full">
+                    <i className="fi fi-rr-file-edit"></i>
+                    <p>Write</p>
+                </Link>
 
 
-                    {
-                        access_token ? 
-                        <>
+                {
+                    access_token ? 
+                    <>
                         <Link to="/dashboard/notification">
                             <button className="w-12 h-12 rounded-full bg-grey relative hover:bg-black/10">
                                 <i className="fi fi-rr-bell text-2xl block mt-1"></i>
                             </button>
-
-
-
                         </Link>
 
                         <div className="relative" onClick={handleUserNavPanel} onBlur={handleBlur}>
@@ -76,22 +73,22 @@ const Navbar = () => {
                                 userNavPanel ? <UserNavigationPanel/> : ""
                             }
                         </div>
-                        </>
-                        :
-                        <>
+                    </>
+                    :
+                    <>
                         <Link className="btn-dark py-2" to="/signin">
                             Sign In
                         </Link>
-                        <Link className="btn-light py-2 hidden md:block" to="/signup">
+                        <Link className="max-md:hidden btn-light py-2 md:block" to="/signup">
                             Sign Up
                         </Link>
-                        </>
-                    }
+                    </>
+                }
 
-                    
+                
 
 
-                </div>
+            </div>
             </nav>
 
             <Outlet/>
