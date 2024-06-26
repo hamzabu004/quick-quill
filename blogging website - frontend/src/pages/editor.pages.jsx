@@ -8,35 +8,33 @@ import { createContext } from "react"
 
 export const EditorContext = createContext({});
 
-
-const Editor = () => {
-
-    const [blog, setBlog] = useState(blogStructure)
-
-    const [ editorState, setEditorState] = useState("editor");
-
-    const blogStructure = {
-        title:'',
-        banner:'',
-        content:[],
-        tags:[],
-        des:'',
-        author : {
-            personal_info: {}
-        }
+const blogStructure = {
+    title:'',
+    banner:'',
+    content:[],
+    tags:[],
+    des:'',
+    author : {
+        personal_info: {}
     }
-
+}
+const Editor = () => {
+    const [ editorState, setEditorState] = useState("editor");
+    const [textEditor, setTextEditor] = useState({isReady: false});
+    const [blog, setBlog] = useState(blogStructure);
     
 
     let { userAuth : { access_token }} = useContext(UserContext)
 
     return (
-        <EditorContext.Provider value={{blog, setBlog, editorState, setEditorState}}>
+        <EditorContext.Provider value={{blog, setBlog, editorState, setEditorState, textEditor, setTextEditor}}>
             {
+                
                 access_token == null ? <Navigate to="/signin"></Navigate> 
-                : editorState == "editor" ? <BlogEditor/> : <PublishForm/>
+                :editorState == "editor" ? <BlogEditor/> : <PublishForm></PublishForm>
             }
         </EditorContext.Provider>
+        
        
        
     )
