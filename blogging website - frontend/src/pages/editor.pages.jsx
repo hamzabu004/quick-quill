@@ -31,7 +31,7 @@ const Editor = () => {
             {
                 
                 access_token == null ? <Navigate to="/signin"></Navigate> 
-                :editorState == "editor" ? <BlogEditor/> : <PublishForm></PublishForm>
+                :editorState == "editor" ? <BlogEditor/> : <PublishForm/>
             }
         </EditorContext.Provider>
         

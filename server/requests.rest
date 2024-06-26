@@ -1,2 +1,6 @@
+POST http://localhost:3000/create-blog
+Content-Type: application/json
 
-GET http://localhost:3000/get-upload-url
+{
+    "blog-name":"test-blog"
+}
