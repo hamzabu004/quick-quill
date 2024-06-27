@@ -10,7 +10,6 @@ import EditorJS  from "@editorjs/editorjs";
 import tools from "./tools.component";
 import axios from "axios";
 import { UserContext } from "../App";
-import { text } from "stream/consumers";
 
 
 const BlogEditor = () => {
