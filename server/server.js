@@ -310,7 +310,7 @@ server.post('/search-blogs', (req, res)=>{
 
     let maxLimit = 5;
 
-    let findQuery = {$or:[{tags:tag, draft:false}, {draft:false, title: new RegExp(tag, 'i')}, {des:new RegExp(tag, 'i')}]}
+    let findQuery = {$or:[{tags:tag, draft:false}, {draft:false, title: new RegExp(tag, 'i')}]}
     
 
     Blog.find(findQuery)
@@ -336,7 +336,7 @@ server.post('/search-blogs-count', (req, res)=>{
     } else if(query) {
         tag = query
     }
-    let findQuery = {$or:[{tags:tag, draft:false}, {draft:false, title: new RegExp(tag, 'i')}, {des:new RegExp(tag, 'i')}]}
+    let findQuery = {$or:[{tags:tag, draft:false}, {draft:false, title: new RegExp(tag, 'i')}]}
     
     
     Blog.countDocuments(findQuery)

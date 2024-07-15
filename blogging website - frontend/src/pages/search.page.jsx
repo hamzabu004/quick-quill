@@ -81,7 +81,7 @@ const SearchPage = () => {
 
             <div className="w-full">
 
-                <InPageNavigation routes={[`Search results for ${query}`, "Users Related"]} defaultHidden={["Users Related"]}>
+                <InPageNavigation routes={[`Search results for ${query}`, `Users Related`]} defaultHidden={["Users Related"]}>
 
                     <>
 
@@ -105,6 +105,14 @@ const SearchPage = () => {
 
                 </InPageNavigation>
 
+            </div>
+
+            <div className="min-w-[40%] lg:min-w-[350px] max-w-min border-l border-grey pl-8 pt-3 max-md:hidden">
+                    <h1 className="font-medium text-xl mb-8">
+                    <i className="fi fi-rr-user mr-4 mt-4"></i> Users related to search
+                    </h1>
+                    <UserCardWrapper/>
+                    
             </div>
 
         </section>
