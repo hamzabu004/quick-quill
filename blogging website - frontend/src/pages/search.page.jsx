@@ -81,7 +81,7 @@ const SearchPage = () => {
 
             <div className="w-full">
 
-                <InPageNavigation routes={[`Search results for ${query}`, `Users Related`]} defaultHidden={["Users Related"]}>
+                <InPageNavigation routes={[`Search results for "${query}"`, `Users Related`]} defaultHidden={["Users Related"]}>
 
                     <>
 
