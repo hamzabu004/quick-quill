@@ -94,7 +94,7 @@ const SearchPage = () => {
                         return (<AnimationWrapper key={i} transition={{duration:1, delay:i*.1}}>
                             <BlogPostCard content={blog} author={blog.author.personal_info}/>
                         </AnimationWrapper>)
-                    }) : <NoDataMessage message={"No blogs under this category at the moment :("} secondary="Write the first one!"/>
+                    }) : <NoDataMessage message={"No blogs related to this search :("} secondary="Write the first one!"/>
                 )
                     }
                             {<LoadMoreDataBtn state={blogs} fetchDataFun={searchBlogs}/>}

@@ -300,17 +300,21 @@ server.get('/trending-blogs', (req, res) => {
 
 server.post('/search-blogs', (req, res)=>{
 
-    let { tag, query, page } = req.body;
+    let { tag, query, author, page } = req.body;
+
+    let findQuery;
 
     if(tag){
         tag= tag.toLowerCase()
+        findQuery = {$or:[{tags:tag, draft:false}, {draft:false, title: new RegExp(tag, 'i')}]}
     } else if(query) {
         tag = query
+        findQuery = {$or:[{tags:tag, draft:false}, {draft:false, title: new RegExp(tag, 'i')}]}
+    } else if(author){
+        findQuery = {draft:false, author:author}
     }
 
     let maxLimit = 5;
-
-    let findQuery = {$or:[{tags:tag, draft:false}, {draft:false, title: new RegExp(tag, 'i')}]}
     
 
     Blog.find(findQuery)
@@ -329,14 +333,19 @@ server.post('/search-blogs', (req, res)=>{
 })
 
 server.post('/search-blogs-count', (req, res)=>{
-    let {tag, query} = req.body;
+    let {tag, query, author} = req.body;
+
+    let findQuery;
     
     if(tag){
         tag= tag.toLowerCase()
+        findQuery = {$or:[{tags:tag, draft:false}, {draft:false, title: new RegExp(tag, 'i')}]}
     } else if(query) {
         tag = query
+        findQuery = {$or:[{tags:tag, draft:false}, {draft:false, title: new RegExp(tag, 'i')}]}
+    } else if(author){
+        findQuery = {draft:false, author:author}
     }
-    let findQuery = {$or:[{tags:tag, draft:false}, {draft:false, title: new RegExp(tag, 'i')}]}
     
     
     Blog.countDocuments(findQuery)
@@ -364,6 +373,20 @@ server.post('/search-users', (req, res)=>{
         return res.status(500).json({error: err.message})
     })
 
+
+})
+
+server.post("/get-profile", (req, res) => {
+    let { username } = req.body;
+
+    User.findOne({"personal_info.username" : username})
+    .select("-personal_info.password -google_auth -updatedAt -blogs")
+    .then(user => {
+        return res.status(200).json(user)
+    })
+    .catch(err =>{
+        return res.status(500).json({error:err.message})
+    })
 
 })
 
