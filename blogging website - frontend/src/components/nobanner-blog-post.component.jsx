@@ -6,7 +6,7 @@ const MinimalBlogPost = ({blog, index}) => {
     let { title, blog_id:id, tags, author : {personal_info : {fullname, username, profile_img}}, publishedAt } = blog
     
     return (
-        <Link to={`/blog/${id}`} className="flex gap-5 mb-8">
+        <Link to={`/blogs/${id}`} className="flex gap-5 mb-8">
             <h1 className="blog-index">{index<10 ? "0"+ (index+1): index}</h1>
 
             <div>
