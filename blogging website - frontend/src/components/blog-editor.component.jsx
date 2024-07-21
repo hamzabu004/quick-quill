@@ -13,8 +13,6 @@ import { UserContext } from "../App";
 
 
 const BlogEditor = () => {
-
-    
     let { blog, blog : { title, banner, content, tags, desc}, setBlog, textEditor, setTextEditor, setEditorState} = useContext(EditorContext)
     
 

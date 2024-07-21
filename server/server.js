@@ -300,21 +300,28 @@ server.get('/trending-blogs', (req, res) => {
 
 server.post('/search-blogs', (req, res)=>{
 
-    let { tag, query, author, page } = req.body;
+    let { tag, query, author, page, multipleTags, limit, remove_blog} = req.body;
 
     let findQuery;
 
-    if(tag){
+    if(multipleTags){
+        multipleTags.map(t => t.toLowerCase());
+        let stringTags = multipleTags.join('|')
+        findQuery = {$or:[{tags: {$in: multipleTags}, draft:false, blog_id: { $ne : remove_blog }}, {title: new RegExp(stringTags, 'i'), draft:false, blog_id: { $ne : remove_blog }}]}
+    }
+    else if(tag){
         tag= tag.toLowerCase()
         findQuery = {$or:[{tags:tag, draft:false}, {draft:false, title: new RegExp(tag, 'i')}]}
-    } else if(query) {
+    } 
+    else if(query) {
         tag = query
         findQuery = {$or:[{tags:tag, draft:false}, {draft:false, title: new RegExp(tag, 'i')}]}
-    } else if(author){
+    } 
+    else if(author){
         findQuery = {draft:false, author:author}
     }
 
-    let maxLimit = 5;
+    let maxLimit = limit ? limit : 10;
     
 
     Blog.find(findQuery)
@@ -455,6 +462,27 @@ server.post('/create-blog', verifyJWT, (req, res) =>{
     })
 
 
+})
+
+server.post("/get-blog", (req, res) =>{
+    let { blog_id } = req.body
+
+    let incrementVal = 1
+
+    Blog.findOneAndUpdate({blog_id}, {$inc : {"activity.total_reads":incrementVal}})
+    .populate("author", "personal_info.fullname personal_info.username personal_info.profile_img")
+    .select("title des content banner activity publishedAt blog_id tags")
+    .then(blog =>{
+
+        User.findOneAndUpdate({"personal_info.username":blog.author.personal_info.username}, {$inc:{"account_info.total_reads" : incrementVal}})
+        .catch(err =>{
+            return res.status(500).json({error:err.message})
+        })
+
+        return res.status(200).json({blog})})
+    .catch(err =>{
+        return res.status(500).json({error:err.message})
+    })
 })
 
 server.listen(PORT, () => {
