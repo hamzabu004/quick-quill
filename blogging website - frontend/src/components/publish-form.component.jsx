@@ -4,7 +4,7 @@ import {Toaster, toast} from "react-hot-toast";
 import Editor, { EditorContext } from "../pages/editor.pages";
 import Tag from "./tags.component";
 import { UserContext } from "../App";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 
@@ -12,7 +12,10 @@ const PublishForm = () => {
 
     let characterLimit = 200;
     let tagLimit = 5;
-    let { blog, blog: {banner, title, tags, desc, content}, setEditorState, setBlog} = useContext(EditorContext);
+
+    let { blog_id } = useParams();
+
+    let { blog, blog: {banner, title, tags, des, content}, setEditorState, setBlog} = useContext(EditorContext);
 
     let { userAuth : {access_token} } = useContext(UserContext)
 
@@ -34,7 +37,7 @@ const PublishForm = () => {
         
         let input = e.target;
 
-        setBlog({...blog, desc:input.value})
+        setBlog({...blog, des:input.value})
     }
 
     const handleTitleDown = (e) => {
@@ -69,7 +72,7 @@ const PublishForm = () => {
         if(!title.length){
             return toast.error("You must provide a title to publish the blog")
         }
-        if(!desc.length || desc.length>200){
+        if(!des.length || des.length>200){
             return toast.error("You must provide a blog description under 200 characters to publish")
         }
         if(!tags.length){
@@ -84,10 +87,10 @@ const PublishForm = () => {
         e.target.classList.add("disable")
 
         let blogObj = {
-            title, banner, desc, content, tags, draft:false
+            title, banner, des, content, tags, draft:false
         }
 
-        axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/create-blog", blogObj, {
+        axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/create-blog", {...blogObj, id: blog_id}, {
             headers : {
                 'Authorization' : `Bearer ${access_token}`
             }
@@ -134,7 +137,7 @@ const PublishForm = () => {
 
                     <h1 className="text-4xl font-medium mt-2 leading-tight line-clamp-2">{title}</h1>
 
-                    <p className="font-gelasio line-clamp-2 text-xl leading-7 mt-4">{desc}</p>
+                    <p className="font-gelasio line-clamp-2 text-xl leading-7 mt-4">{des}</p>
 
                 </div>
 
@@ -150,16 +153,16 @@ const PublishForm = () => {
                         className="input-box pl-4"></input>
                 
                     <p className="text-dark-grey mb-2 mt-9">Short description of your blog (Maximum 200 characters)</p>
-                
                     <textarea 
                         placeholder=""
                         maxLength={characterLimit} 
-                        defaultValue={desc}
+                        defaultValue={des}
+                        
                         className="h-40 resize-none leading-7 input-box"
                         onChange={handleDescChange}
                         onKeyDown={handleTitleDown}></textarea>
 
-                    <p className="mt-1 text-dark-grey text-sm text-right">{desc?characterLimit-desc.length:characterLimit} characters left</p>
+                    <p className="mt-1 text-dark-grey text-sm text-right">{des?characterLimit-des.length:characterLimit} characters left</p>
                     
 
                     <p className="text-dark-grey mb-2 mt-9">Add some tags to describe what your blog is about</p>
