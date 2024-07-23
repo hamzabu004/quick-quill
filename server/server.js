@@ -6,7 +6,6 @@ import User from './Schema/User.js';
 import Blog from './Schema/Blog.js';
 import Notification from './Schema/Notification.js'
 import Comment from './Schema/Comment.js';
-import Comment from './Schema/Comment.js';
 import { nanoid } from "nanoid";
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
@@ -14,8 +13,6 @@ import admin from "firebase-admin";
 import serviceAccountKey from "./blogging-website-88ff8-firebase-adminsdk-mo1gc-44c62f84e0.json" with {type:"json"}
 import {getAuth} from "firebase-admin/auth";
 import aws from "aws-sdk"
-import { populate } from "dotenv";
-import { populate } from "dotenv";
 
 
 const server = express();
