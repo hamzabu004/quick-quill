@@ -106,6 +106,8 @@ const CommentCard = ({ index, leftVal, commentData}) => {
 
     const deleteComment = (e) => {
 
+        console.log('click')
+
         e.target.setAttribute("disabled", true);
 
         axios.post(import.meta.env.VITE_SERVER_DOMAIN + "/delete-comment", {_id}, {
@@ -130,7 +132,6 @@ const CommentCard = ({ index, leftVal, commentData}) => {
         }
         setReplying(preVal => !preVal)
     }
-
 
     return (
         <>

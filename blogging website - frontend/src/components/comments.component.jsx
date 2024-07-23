@@ -86,6 +86,7 @@ const CommentsContainer = () => {
                 }):
                 <NoDataMessage message={"No Comments"}/>
             }
+            {console.log(total_parent_comments, totalParentCommentsLoaded)}
             { 
                 
                 total_parent_comments > totalParentCommentsLoaded ? 
