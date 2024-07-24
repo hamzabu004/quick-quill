@@ -246,8 +246,51 @@ server.post("/google-auth", async (req, res) => {
 
     })
     .catch(err => {return res.status(500).json({"error":"Failed to authenticate through Google. Try again or try another account"})})
+})
 
+server.post("/change-password", verifyJWT, (req, res) => {
 
+    let {currentPassword, newPassword} = req.body;
+
+    if(!passwordRegex.test(currentPassword) || !passwordRegex.test(newPassword)){
+        return res.status(403).json({errpr:"Passwords must be 6-20 characters, with at least 1 number, 1 lowercase letter and 1 uppercase letter"})
+    }
+
+    User.findOne({_id: req.user})
+    .then((user) => {
+        if(user.google_auth) {
+            return res.status(403).json({error: "Cannot change password of account created using Google"})
+        }
+
+        bcrypt.compare(currentPassword, user.personal_info.password, (err, result) =>{
+            if(err){
+                return res.status(500).json({error: "Error occurred while changing password, try again"})
+            }
+            if(!result){
+                return res.status(403).json({error: "Current password is incorrect"})
+            }
+            if(currentPassword == newPassword){
+                return res.status(403).json({error: "New password cannot be the same as old password"})
+            }
+
+            bcrypt.hash(newPassword, 10, (err, hashed_password) => {
+                if(err){
+                    return res.status(500).json({error: "Error occurred while changing password, try again"})
+                }
+                User.findOneAndUpdate({_id: req.user}, {"personal_info.password" : hashed_password})
+                .then((u) => {
+                    return res.status(200).json({status: "Password changed successfully"})
+                })
+                .catch(err => {
+                    return res.status(500).json({error: "Some error occurred while saving new password, try again"})
+                })
+            })
+
+        })
+    })
+    .catch(err => {
+        return res.status(500).json({error: "User not found"})
+    })
 
 })
 
@@ -394,6 +437,72 @@ server.post("/get-profile", (req, res) => {
         return res.status(200).json(user)
     })
     .catch(err =>{
+        return res.status(500).json({error:err.message})
+    })
+})
+
+server.post("/update-profile-img", verifyJWT, (req, res) => {
+    let {url} = req.body
+
+    User.findOneAndUpdate({_id: req.user}, {"personal_info.profile_img" : url})
+    .then(() => {
+        return res.status(200).json({profile_img:url})
+    })
+    .catch(err => {
+        return res.status(500).json({error: err.message})
+    })
+})
+
+server.post("/update-profile", verifyJWT, (req, res) => {
+
+    let {username, bio, social_links} = req.body;
+
+    let bioLimit = 160;
+
+    if(username.length < 3){
+        return res.status(403).json({error: "Username must be at least 3 characters"})
+    }
+    if(bio.length > bioLimit){
+        return res.status(403).json({error: `Bio cannot be more than ${bioLimit} characters`})
+    }
+
+    let socialLinksArr = Object.keys(social_links);
+
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    try {
+        for (let i=0; i<socialLinksArr.length; i++){
+            if(social_links[socialLinksArr[i]].length){
+                let hostname = new URL(social_links[socialLinksArr[i]]).hostname
+
+                if(!hostname.includes(`${socialLinksArr[i]}.com`) && socialLinksArr[i] != 'website'){
+                    return res.status(403).json({error: `${capitalizeFirstLetter(socialLinksArr[i])} link is invalid. Please enter a valid URL`})
+                }
+            }
+        }
+
+    } catch {
+        return res.status(500).json({error: "Invalid URL(s) for your socials links"})
+    }
+
+    let updateObj = {
+        "personal_info.username" : username,
+        "personal_info.bio" : bio,
+        social_links
+    }
+
+    User.findOneAndUpdate({_id: req.user}, updateObj, {
+        runValidators: true
+    })
+    .then(() => {
+        return res.status(200).json({username})
+    })
+    .catch(err => {
+        if(err.code == 11000){
+            return res.status(409).json({error: "Username already taken"})
+        }
         return res.status(500).json({error:err.message})
     })
 
