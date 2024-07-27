@@ -65,6 +65,10 @@ const PublishForm = () => {
 
     const publishBlog = (e) =>{
 
+        let allowedTags = ["tech", "gaming", "pop culture", "social media", "finance", "sports", "music", "nature", "travel"]
+
+        let hasCommonItem = tags.some(tag => allowedTags.includes(tag));
+
         if (e.target.className.includes("disable")){
             return;
         }
@@ -81,6 +85,10 @@ const PublishForm = () => {
         if(tags.length>5){
             return toast.error("You cannot add more than 5 tags to your blog")
         }
+        if(!hasCommonItem){
+            return toast.error("Your tags need to include at least one of the main tags")
+        }
+
 
         let loadingToast = toast.loading("Publishing...")
 
@@ -164,8 +172,10 @@ const PublishForm = () => {
 
                     <p className="mt-1 text-dark-grey text-sm text-right">{des?characterLimit-des.length:characterLimit} characters left</p>
                     
-
+                    
                     <p className="text-dark-grey mb-2 mt-9">Add some tags to describe what your blog is about</p>
+                    <p className="text-sm mb-2 mt-9">Your tags need to include at least one of the main tags:</p>
+                    <p className="text-sm mb-2">(Tech, Gaming, Pop Culture, Social Media, Finance, Sports, Music, Nature, Travel)</p>
 
                     <div className="relative input-box pl-2 py-2 pb-4">
                         <input 
