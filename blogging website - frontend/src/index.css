@@ -48,7 +48,7 @@
     }
 
     .btn-dark{
-        @apply whitespace-nowrap bg-black text-white rounded-full py-3 px-6 text-xl capitalize hover:bg-opacity-80;
+        @apply whitespace-nowrap bg-purple text-white rounded-full py-3 px-6 text-xl capitalize hover:bg-opacity-80;
     }
 
     .btn-light{
@@ -112,7 +112,7 @@
     }
 
     .blog-index{
-        @apply text-3xl sm:text-3xl lg:text-4xl font-bold text-black/40 leading-none;
+        @apply text-3xl sm:text-3xl lg:text-4xl font-bold text-purple/50 leading-none;
     }
 }
 

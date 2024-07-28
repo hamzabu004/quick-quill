@@ -45,7 +45,7 @@ export default {
                 'red': '#991F1F',
                 'transparent': 'transparent',
                 'twitter': '#0E71A8',
-                'purple': '#582C8E'
+                'purple': '#9b3dff'
             }
         })
     ],

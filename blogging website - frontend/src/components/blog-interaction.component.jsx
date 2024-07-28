@@ -68,7 +68,7 @@ const BlogInteraction = ({hide=false}) => {
 
                 <button 
                 onClick={handleLike}
-                className={"w-10 h-10 rounded-full flex items-center justify-center " +(isLikedByUser ? "bg-red/20 text-red" : "bg-grey/80") }>
+                className={"w-10 h-10 rounded-full flex items-center justify-center " +(isLikedByUser ? "bg-purple/20 text-purple" : "bg-grey/80") }>
                     <i className={"fi " + (isLikedByUser ?  "fi-sr-heart" : "fi-rr-heart") }></i>
                 </button>
                 <p className="text-xl text-dark-grey">{total_likes}</p>

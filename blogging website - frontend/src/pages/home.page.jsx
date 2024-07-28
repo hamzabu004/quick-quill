@@ -121,7 +121,7 @@ const HomePage = () => {
                     </InPageNavigation>
                 </div>
                 
-                <div className="min-w-[30%] lg:min-w[300px] max-w-min border-l border-grey pl-8 pt-3 max-md:hidden">
+                <div className="min-w-[30%] lg:min-w[300px] max-w-min border-l border-purple/30 pl-8 pt-3 max-md:hidden">
                     <div className="flex flex-col gap-10">
                         <div>
                             <h1 className="font-medium text-xl mb-8 ">Filter what you're looking for!</h1>
@@ -129,7 +129,7 @@ const HomePage = () => {
                                 {
                                     categories.map((category, i) =>{
                                         return (
-                                        <button onClick={loadBlogbyCategory} className={"tag " + (pageState == category ? " bg-black text-white" : "")} key={i}>
+                                        <button onClick={loadBlogbyCategory} className={"tag " + (pageState == category ? " bg-purple text-white" : "")} key={i}>
                                             {category}
                                         </button>
                                         );

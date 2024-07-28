@@ -162,7 +162,7 @@ const BlogEditor = () => {
 
     return (
         <>
-            <nav className="navbar">
+            <nav className="navbar border-b border-purple/30">
             <Link to="/" className="flex-none w-10">
                 <img src={theme == "light" ? darkLogo : lightLogo}/>
             </Link>
