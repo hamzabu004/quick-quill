@@ -164,7 +164,7 @@ const BlogEditor = () => {
         <>
             <nav className="navbar border-b border-purple/30">
             <Link to="/" className="flex-none w-10">
-                <img src={theme == "light" ? darkLogo : lightLogo}/>
+                <img src={darkLogo} style={{width:50, height:50}}/>
             </Link>
             <p className="max-md:hidden text-black line-clamp-1 w-full">
                 {title.length ? title : "New Blog"}

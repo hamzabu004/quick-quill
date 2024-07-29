@@ -69,7 +69,7 @@ const Navbar = () => {
         <>
             <nav className="navbar z-50 border-b border-purple/30">
             <Link to="/" className="flex-none w-10">
-                    <img src={theme == "light" ? darkLogo : lightLogo} className="w-full"/> 
+                    <img src={darkLogo} className="w-full" style={{width:50, height:50}}/> 
             </Link> 
 
             <div className={"absolute bg-white w-full left-0 top-full mt-0.5 border-b border-grey py-4 px-[5vw] md:border-0 md:block md:relative md:inset-0 md:p-0 md:w-auto md:show " + 
