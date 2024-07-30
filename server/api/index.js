@@ -14,8 +14,6 @@ import serviceAccountKey from "../blogging-website-88ff8-firebase-adminsdk-mo1gc
 import {getAuth} from "firebase-admin/auth";
 import aws from "aws-sdk"
 
-const cors = require('cors');
-
 const server = express();
 let PORT = 3000;
 
