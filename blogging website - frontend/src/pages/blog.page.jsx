@@ -24,7 +24,7 @@ export const BlogContext = createContext({})
 
 const BlogPage = () =>{
     // let { blog_id } = useParams();
-    let blog_id = window.location.href.split("/")[4]
+    let blog_id = window.location.href.split("blogs/")[1]
 
     const [ blog, setBlog ] = useState(blogStrucutre);
     const [ similarBlogs, setSimilarBlogs ] = useState(null);
