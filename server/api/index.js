@@ -601,6 +601,7 @@ server.post("/get-blog", (req, res) =>{
     .populate("author", "personal_info.fullname personal_info.username personal_info.profile_img")
     .select("title des content banner activity publishedAt blog_id tags")
     .then(blog =>{
+        console.log(blog)
 
         User.findOneAndUpdate({"personal_info.username":blog.author.personal_info.username}, {$inc:{"account_info.total_reads" : incrementVal}})
         .catch(err =>{
