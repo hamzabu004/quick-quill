@@ -21,7 +21,7 @@ const HomePage = () => {
 
     const fetchLatestBlogs = ({page=1}) => {
         axios
-        .post(import.meta.env.VITE_SERVER_DOMAIN + "/latest-blogs", { page })
+        .post(import.meta.env.VITE_SERVER_DOMAIN + "/api/latest-blogs", { page })
         .then( async ({data}) =>{
 
             let formatedData = await filterPaginationData({
