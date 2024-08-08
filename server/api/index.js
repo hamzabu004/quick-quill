@@ -323,7 +323,7 @@ server.get('/latest-blogs', (req, res) => {
 
 })
 
-server.get('/all-latest-blogs-count', (req, res) =>{
+server.post('/all-latest-blogs-count', (req, res) =>{
     Blog.countDocuments({ draft:false })
     .then(count =>{
         return res.status(200).json({totalDocs:count})
