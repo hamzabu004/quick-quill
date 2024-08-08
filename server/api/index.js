@@ -301,7 +301,7 @@ server.post("/change-password", verifyJWT, (req, res) => {
 })
 
 
-server.post('/latest-blogs', (req, res) => {
+server.get('/latest-blogs', (req, res) => {
 
     let {page} = req.body
 
