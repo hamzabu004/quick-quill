@@ -27,8 +27,7 @@ const InPageNavigation = ({ routes, defaultHidden=[], defaultActiveIndex = 0, ch
     }
 
     useEffect(()=> {
-
-        if(width > 766 & inPageNavIndex != defaultActiveIndex){
+        if(inPageNavIndex != defaultActiveIndex){
             changePageState(activeTabRef.current, defaultActiveIndex)
         }
         
