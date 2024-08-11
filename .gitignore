@@ -4,6 +4,6 @@ node_modules/*
 
 requests.rest
 
-
+frontend/.env
 
 server/node_modules/*
