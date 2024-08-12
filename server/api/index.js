@@ -39,7 +39,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 //setting up AWS (s3 bucket)
 const s3 = new aws.S3({
     region:'us-east-2',
-    accessKeyId:process.env.AWS_ACCESS_KEY,
+    accessKeyId:process.env.AWS_S3_BUCKET_ACCESS_KEY,
     secretAccessKey:process.env.AWS_SECRET_ACCESS_KEY
 })
 
